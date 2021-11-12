@@ -1,0 +1,16 @@
+Server Side Rendering.
+-> En SSR es el servidor el que se encarga de generar el HTML.
+-> En CSR es el navegador el que se encarga de generar el HTML.
+
+Befenicios: 
+-> El sitio web o aplicación carga más rápido ya que los recursos de la 
+   computadora no son utilizados sino los del servidor.
+-> Si alguien navega en una computadora o un teléfono con distintos
+   procesadores su experiencia será distinta.
+-> Se recomienda para aplicaciones grandes o si la aplicación va a crecer 
+   en el futuro.
+-> Mejora el SEO.
+
+Opciones SSR en React:
+-> Next.js
+-> Gatsby

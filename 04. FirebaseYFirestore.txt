@@ -1,0 +1,41 @@
+Firebase y Firestore.
+-> Firebase ofrece dos soluciones de bases de datos en la nube y
+   accesibles, ambas son en tiempo real.
+-> Ambas utilizan NoSQL como base de datos:
+   - Realtime Database: Es la solución original de Firebase, en 
+     tiempo real.
+   - Cloud Firestore: Es la nueva base de datos. Es una versión
+     mejorada de la versión original, un modelo de datos más
+     intuitivo (JSON). Consultas rápidas y también en tiempo real.
+
+Diferencias entre Realtime Database y Cloud Firestore:
+-> Cloud Firestore es la nueva base de datos, tendrá más funciones,
+   rendimiento, escalabilidad, soporta grandes aplicaciones, más
+   seguro.
+-> Cloud Firestore es la mejor opción, pero hay ciertas diferencias
+   y consideraciones.
+-> DATOS:
+   -> Realtime Database:
+      - Se almacenan los datos de forma muy anidada como JSON.
+      - Si los datos se almacenan en un gran árbol puede hacer que
+        sea más difícil de organiza.
+   -> Cloud Firestore:
+      - Se almacenan los datos en un formato muy similar a JSON, en
+        documentos.
+      - Se pueden almacenar datos muy completos de forma sencilla,
+       con colecciones y subcolecciones en los documentos.
+-> SOPORTE SIN CONEXION Y TIEMPO REAL:
+   -> Realtime Database:
+      - Solo soporta las plataformas iOS y Android sin conexión.
+   -> Cloud Firestore:
+      - Soporta Android, iOS y plataformas web sin conexión.
+-> CONSULTAS:
+   -> Realtime Database:
+      - Solo se puede ordenar o filtrar según una propiedad.
+      - Si realizar una consulta de un registro, obtiene todo el árbol
+        JSON completo.
+   -> Cloud Firestore:
+      - Se pueden realizar diferentes filtros y ordenar por distintas
+        condiciones.     
+      - Puedes realizar consultas para subcolecciones en lugar del árbol
+        completo.

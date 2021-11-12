@@ -1,0 +1,14 @@
+Next.JS.
+-> Framework sencillo para crear aplicaciones React con SSR. 
+-> VueJS y Angular también tienen sus alternativas SSR.
+
+Características principales:
+-> Server Side Rendering.
+-> Code Splitting y Lazy Loading a los componentes, de esta forma
+   separa el código que no se utiliza en determinado componente,
+   pero cuando se utiliza ese componente lo carga.
+-> Routing en base a los archivos.
+-> Soporte para CSS.
+-> Hot Reload.
+-> URL's Limpias.
+   

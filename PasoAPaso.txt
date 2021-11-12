@@ -1,0 +1,3 @@
+** Configuración del Proyecto **
+
+1. Crear proyecto: npx create-next-app producthuntWebNextjs

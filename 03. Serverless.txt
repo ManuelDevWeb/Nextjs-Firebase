@@ -1,0 +1,22 @@
+Serverless.
+-> Pareciera que por el nombre significa "Sin servidores"
+   pero aún así hay un servidor.
+-> En lugar de tener que comprar un servidor físico y configurarlo,
+   es una opción donde alguien más ofrece la contratación y renta
+   de un espacio.  
+
+Serverless y Front End.
+-> Si eres desarrollador Frontend, gracias a serverless puedes
+   realizar actividades que solo un backend podría realizar como
+   obtener datos de una BD.
+-> Cada día los servicios de serverless van agregando nuevas
+   características que permiten crear aplicaciones fullstack solo con
+   conocimientos de Frontend o javascript.
+
+Servicios más populares de Serverless:
+-> Google Firebase.
+-> Google Cloud.
+-> Amazon Web Services.
+-> Microsoft Azure.
+-> StdLib.
+-> WebTask.
