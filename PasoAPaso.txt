@@ -1,3 +1,49 @@
 ** Configuración del Proyecto **
 
-1. Crear proyecto: npx create-next-app producthuntWebNextjs
+1. Crear proyecto: npx create-next-app producthuntwebnextjs
+
+2. Comando para desarrollo: npm run dev
+
+3. Hacer limpieza en el index.js, eliminar estilos, eliminar _app.js y la carpeta api.
+
+4. Instalar las dependencias: npm i @emotion/core @emotion/styled babel-plugin-emotion @emotion/babel-preset-css-prop
+
+5. Crear el archivo: .babelrc 
+
+6. Crear la carpeta: components
+
+7. Crear la carpeta: components/layout
+
+8. Crear el componente: components/layout/Layout.js
+
+** Header y CSS ** 
+
+9. Crear el componente: components/layout/Header.js
+
+10. Crear la carpeta: components/ui
+
+11. Crear el componente: components/ui/Buscar.js
+
+12. Crear el componente: components/layout/Navegacion.js
+
+13. En Layout agregar el head con la configuración de la página.
+
+14. Crear la carpeta: public/static
+
+15. Crear la carpeta: public/static/css
+
+16. Crear la hoja de estilos: public/static/css/app.css
+
+17. Agregar la carpeta de imagenes a la carpeta: public/static
+
+18. Crear el componente: components/ui/Boton.js
+
+19. Crear la page: pages/crear-cuenta.js
+
+20. Crear la page: pages/populares.js
+
+21. Crear la page: pages/nuevo-producto.js
+
+22. Crear la page: pages/login.js
+
+23. Crear la page: pages/buscar.js
