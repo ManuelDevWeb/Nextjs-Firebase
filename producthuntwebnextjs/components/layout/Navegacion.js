@@ -23,8 +23,8 @@ const Navegacion = () => {
     return (
         <Nav>
             <Link href="/">Inicio</Link>
-            <Link href="/nosotros">Nosotros</Link>
-            <Link href="/nosotros">Nuevo Producto</Link>
+            <Link href="/populares">Populares</Link>
+            <Link href="/nuevo-producto">Nuevo Producto</Link>
         </Nav>
     );
 }

@@ -1,20 +1,20 @@
 import React from 'react';
-import styled from '@emotion/styled';
 
 // Components
 import Layout from '../components/layout/Layout';
 
 // Styles
+import styled from '@emotion/styled';
 
 
-const Nosotros=()=> {
+const  Login=()=> {
   return (
     <div>
-      <Layout>
-        <h1>Nosotros</h1>
-      </Layout>
+        <Layout>
+            <h1>Login</h1>
+        </Layout>
     </div>
   )
 }
 
-export default Nosotros;
+export default Login;

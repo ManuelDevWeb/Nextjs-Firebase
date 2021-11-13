@@ -31,7 +31,7 @@ const Logo = styled.p`
 `;
 
 const Header = () => {
-  const usuario = true;
+  const usuario = false;
   return (
     <header
       // Estilos header
@@ -78,11 +78,11 @@ const Header = () => {
               </>
             ) : (
               <>
-                <Link href="/">
+                <Link href="/login">
                   <Boton bgColor>Login</Boton>
                 </Link>
 
-                <Link href="/">
+                <Link href="/crear-cuenta">
                   <Boton>Crear Cuenta</Boton>
                 </Link>
               </>
