@@ -47,3 +47,9 @@
 22. Crear la page: pages/login.js
 
 23. Crear la page: pages/buscar.js
+
+** Login y Crear Cuenta **
+
+24. Empezar a trabajar en la page: pages/crear-cuenta.js
+
+25. Crear el componente: components/ui/Input.js
