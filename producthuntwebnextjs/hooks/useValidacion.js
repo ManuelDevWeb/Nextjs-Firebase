@@ -8,7 +8,7 @@ const useValidacion = (stateInicial, validar, funcionOnSubmit) => {
     // Flag para indicar si el formulario es valido o no y así poder ejecutarse
     const [submitForm, setSubmitForm] = useState(false);
 
-    // useEffect que se ejecuta una sola vez
+    // useEffect que depende de los errores
     useEffect(()=>{
         if(submitForm){
             // Validando si el objeto de errores esta vacio
@@ -21,7 +21,7 @@ const useValidacion = (stateInicial, validar, funcionOnSubmit) => {
             
             setSubmitForm(false);
         }
-    },[]);
+    },[errores]);
 
     // Función que se ejecuta conforme el usuario escribe en los inputs
     const handleChange = e => {
@@ -36,7 +36,7 @@ const useValidacion = (stateInicial, validar, funcionOnSubmit) => {
     // Función que se ejeucta cuando el usuario hace submit
     const handleSubmit = e => {
         e.preventDefault();
-        // Validando si el formulario es valido
+        // Validando los campos a traves de la función validar
         const erroresValidacion = validar(valores);
         // Almacenando en el state errores lo que se obtiene de la validación
         setErrores(erroresValidacion);
@@ -44,12 +44,21 @@ const useValidacion = (stateInicial, validar, funcionOnSubmit) => {
         setSubmitForm(true);
     };
 
+    // Función que se ejecuta cuando el usuario se sale de la caja del input
+    const handleBlur=e=>{
+        e.preventDefault();
+        // Validando los campos a traves de la función validar
+        const erroresValidacion = validar(valores);
+        // Almacenando en el state errores lo que se obtiene de la validación
+        setErrores(erroresValidacion);
+    }
+
     return {
         valores,
         errores,
-        submitForm,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        handleBlur
     }
 }
  

@@ -1,13 +1,13 @@
 // Styles
 import styled from "@emotion/styled";
 
-const Formulario=styled.form`
+const Formulario = styled.form `
     max-width:600px;
     width: 95%;
     margin: 5rem auto 0 auto;
 `;
 
-const Campo=styled.div`
+const Campo = styled.div `
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
@@ -24,7 +24,7 @@ const Campo=styled.div`
     }
 `;
 
-const InputSubmit=styled.input`
+const InputSubmit = styled.input `
     background-color:var(--naranja);
     width: 100%;
     padding: 1.5rem;
@@ -41,5 +41,17 @@ const InputSubmit=styled.input`
     }
 `;
 
+const Error = styled.p `
+    background-color: red;
+    padding: 1rem;
+    font-size: 1.4rem;
+    font-family: 'PT Sans', sans-serif;
+    font-weight: 700;
+    color: #FFF;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 2rem 0;
+`;
 
-export {Formulario, Campo, InputSubmit};
+
+export { Formulario, Campo, InputSubmit, Error };
