@@ -57,3 +57,7 @@
 26. Crear la carpeta: hooks
 
 27. Crear el custom hook: hooks/useValidacion.js
+
+28. Crear la carpeta: validacion
+
+29. Crear las reglas de validacion en el archivo: validacion/validarCrearCuenta.js

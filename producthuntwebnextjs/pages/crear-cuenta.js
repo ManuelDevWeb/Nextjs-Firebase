@@ -8,7 +8,18 @@ import {Formulario, Campo, InputSubmit} from '../components/ui/Formulario';
 import styled from '@emotion/styled';
 import { css } from "@emotion/react";
 
+// Custom Hooks (Validaciones)
+import useValidacion from '../hooks/useValidacion';
+
+const STATE_INICIAL = {
+    nombre: '',
+    email: '',
+    password: ''
+}
+
+
 const  CrearCuenta=()=> {
+  const {}=useValidacion()
   return (
     <div>
       <Layout>
