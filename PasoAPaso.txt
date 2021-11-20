@@ -88,4 +88,8 @@
 35. Crear las reglas de validacion para iniciar sesión en el archivo: validacion/validarIniciarSesion.js
 
 36. Crear el custom hook: hooks/useAutenticacion.js
+
+** Creando Productos ** 
+
+37. Empezar a trabajar en la page: pages/nuevo-producto.js
                                      
