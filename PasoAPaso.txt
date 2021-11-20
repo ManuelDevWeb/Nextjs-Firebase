@@ -61,3 +61,27 @@
 28. Crear la carpeta: validacion
 
 29. Crear las reglas de validacion en el archivo: validacion/validarCrearCuenta.js
+
+** Configuración FireBase **
+
+30. Ir a la página de firebase y crear proyecto: - Nombre: Product Hunt
+                                                 - Habilitar google analytics
+
+31. Ir al apartado de Authentication: - Click en comenzar
+                                      - Habilidar método correo electrónico/contraseña
+
+32. Agregar firebase a la aplicación: - Click en el ícono de web
+                                      - Sobrenombre: Product hunt
+                                      - Instalar la dependencia: npm i firebase firebase-admin
+                                      - Crear la carpeta: firebase
+                                      - Crear el archivo y copiar la configuración: firebase/config.js
+
+33. Creando el contexto de firebase: - Crear el archivo: firebase/context.js
+                                     - Crear el archivo: pages/_app.js
+                                     - Crear el archivo: firebase/firebase.js
+                                     - Crear el archivo: firebase/index.js
+
+** Login y Crear Cuenta **
+
+34. 
+                                     

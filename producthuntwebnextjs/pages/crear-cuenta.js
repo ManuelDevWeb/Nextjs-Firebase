@@ -1,8 +1,16 @@
 import React from "react";
 
+// Firebase
+import firebase from "../firebase/index";
+
 // Components
 import Layout from "../components/layout/Layout";
-import { Formulario, Campo, InputSubmit, Error } from "../components/ui/Formulario";
+import {
+  Formulario,
+  Campo,
+  InputSubmit,
+  Error,
+} from "../components/ui/Formulario";
 
 // Styles
 import styled from "@emotion/styled";
@@ -24,12 +32,17 @@ const CrearCuenta = () => {
     useValidacion(STATE_INICIAL, validarCrearCuenta, crearCuenta);
 
   // Destructuring a los valores del custom hook useValidacion
-  const {nombre, email, password} = valores;
+  const { nombre, email, password } = valores;
 
   // Función que se ejecuta cuando el usuario hace submit en el formulario
-  function crearCuenta() {
-    console.log("Creando cuenta...");
-  };
+  async function crearCuenta() {
+    try {
+      // Llamando la función registrar del componente firebase
+      await firebase.registrar(nombre, email, password);
+    } catch (error) {
+      console.log("Hubo un error al crear el usuario", error.message);
+    }
+  }
 
   return (
     <div>
@@ -43,10 +56,7 @@ const CrearCuenta = () => {
           >
             Crear Cuenta
           </h1>
-          <Formulario
-            onSubmit={handleSubmit}
-            noValidate
-          >
+          <Formulario onSubmit={handleSubmit} noValidate>
             <Campo>
               <label htmlFor="nombre">Nombre</label>
               <input
