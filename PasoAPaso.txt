@@ -60,7 +60,7 @@
 
 28. Crear la carpeta: validacion
 
-29. Crear las reglas de validacion en el archivo: validacion/validarCrearCuenta.js
+29. Crear las reglas de validacion para crear cuenta en el archivo: validacion/validarCrearCuenta.js
 
 ** Configuración FireBase **
 
@@ -83,5 +83,7 @@
 
 ** Login y Crear Cuenta **
 
-34. 
+34. Empezar a trabajar en la page: pages/login.js
+
+35. Crear las reglas de validacion para iniciar sesión en el archivo: validacion/validarIniciarSesion.js
                                      

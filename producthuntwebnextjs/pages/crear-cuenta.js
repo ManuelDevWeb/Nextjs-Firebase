@@ -1,4 +1,5 @@
-import React from "react";
+import React,{useState} from "react";
+import Router from "next/router";
 
 // Firebase
 import firebase from "../firebase/index";
@@ -27,6 +28,9 @@ const STATE_INICIAL = {
 };
 
 const CrearCuenta = () => {
+  // State para manejar el error
+  const [error, setError] = useState(false);
+
   // Implementando custom hook useValidacion
   const { valores, errores, handleChange, handleSubmit, handleBlur } =
     useValidacion(STATE_INICIAL, validarCrearCuenta, crearCuenta);
@@ -39,8 +43,12 @@ const CrearCuenta = () => {
     try {
       // Llamando la función registrar del componente firebase
       await firebase.registrar(nombre, email, password);
+
+      // Redireccionando al usuario a la página principal
+      Router.push("/");
     } catch (error) {
       console.log("Hubo un error al crear el usuario", error.message);
+      setError(error.message);
     }
   }
 
@@ -106,6 +114,11 @@ const CrearCuenta = () => {
             {
               // Si hay un error en el campo password, se muestra
               errores.password ? <Error>{errores.password}</Error> : null
+            }
+
+            {
+              // Si existe un error, se muestra
+              error &&  <Error>{error}</Error>
             }
 
             <InputSubmit type="submit" value="Crear Cuenta" />
