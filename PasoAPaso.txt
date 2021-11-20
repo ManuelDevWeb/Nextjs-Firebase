@@ -97,4 +97,14 @@
 
 39. Crear la database en firebase: - Click en Firestore Database
                                    - Seleccionar modo de prueba
+                                   - Agregar configuración en el archivo de firebase
+
+40. Habilitar firestore storage y subiendo imágenes: - Instalar: npm i react-firebase-file-uploader
+                                                     - Implementar FileUploader en el componente nuevoProducto
+                                                     - Ir a storage en la página de firebase
+                                                     - Agregar configuración en el archivo de firebase
+
+** Mostrando los Productos en la página principal **
+
+
                                      

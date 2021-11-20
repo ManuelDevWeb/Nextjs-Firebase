@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Router, {useRouter} from "next/router";
+import FileUploader from 'react-firebase-file-uploader';
 
 // Context
 import {FirebaseContext} from "../firebase/index";
@@ -33,6 +34,12 @@ const NuevoProducto = () => {
   // State para manejar el error
   const [error, setError] = useState(false);
 
+  // State para manejar las imagenes
+  const [nombreImagen, setNombreImagen] = useState("");
+  const [subiendo, setSubiendo] = useState(false);
+  const [progreso, setProgreso] = useState(0);
+  const [urlImagen, setUrlImagen] = useState("");
+
   // Implementando custom hook useValidacion
   const { valores, errores, handleChange, handleSubmit, handleBlur } =
     useValidacion(STATE_INICIAL, validarCrearProducto, crearProducto);
@@ -58,6 +65,7 @@ const NuevoProducto = () => {
       nombre,
       empresa,
       url,
+      urlImagen,
       descripcion,
       votos:0,
       comentarios:[],
@@ -66,6 +74,39 @@ const NuevoProducto = () => {
 
     // Insertar el producto en la BD
     await firebase.db.collection("productos").add(producto);
+
+    return router.push("/");
+  }
+
+  // Función que se ejecuta cuando se empieza a subir una imagen
+  const handleUploadStart = () => {
+    setProgreso(0);
+    setSubiendo(true);
+  };
+
+  // Función para saber el estado del progreso de la subida de la imagen
+  const handleProgress = (progreso) => setProgreso(progreso);
+
+  // Función que se ejecuta cuando hay un error al subir la imagen
+  const handleUploadError = (error) => {
+    setSubiendo(error);
+    console.log(error);
+  };
+
+  // Función que se ejecuta cuando se termina de subir la imagen exitosamente
+  const handleUploadSuccess=(nombre)=>{
+    setProgreso(100);
+    setSubiendo(false);
+    setNombreImagen(nombre)
+    firebase
+      .storage
+      .ref("productos")
+      .child(nombre)
+      .getDownloadURL()
+      .then(url=>{
+        // console.log(url);
+        setUrlImagen(url)
+      })
   }
 
   return (
@@ -119,21 +160,20 @@ const NuevoProducto = () => {
                 errores.empresa ? <Error>{errores.empresa}</Error> : null
               }
 
-              {/* <Campo>
+              <Campo>
                 <label htmlFor="imagen">Imagen</label>
-                <input
-                  type="file"
+                <FileUploader
+                  accept="image/*"
                   id="imagen"
-                  name="imagen"
-                  value={imagen}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+                  name="imagen"                 
+                  randomizeFilename
+                  storageRef={firebase.storage.ref("productos")}
+                  onUploadStart={handleUploadStart}
+                  onUploadError={handleUploadError}
+                  onUploadSuccess={handleUploadSuccess}
+                  onProgress={handleProgress}
                 />
               </Campo>
-              {
-                // Si hay un error en el campo imagen, se muestra
-                errores.imagen ? <Error>{errores.imagen}</Error> : null
-              } */}
 
               <Campo>
                 <label htmlFor="url">URL</label>
