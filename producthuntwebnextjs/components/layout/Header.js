@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import Link from "next/link";
 
 // Components
@@ -6,9 +6,13 @@ import Buscar from "../ui/Buscar";
 import Navegacion from "./Navegacion";
 import Boton from "../ui/Boton";
 
+// Context
+import {FirebaseContext} from '../../firebase';
+
 // Styles
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+
 
 const ContenedorHeader = styled.div`
   max-width: 1200px;
@@ -31,7 +35,9 @@ const Logo = styled.p`
 `;
 
 const Header = () => {
-  const usuario = false;
+  // Destructuring a los elementos que necesitamos del context
+  const {usuario, firebase} = useContext(FirebaseContext);
+
   return (
     <header
       // Estilos header
@@ -71,10 +77,14 @@ const Header = () => {
                     margin-right: 2rem;
                   `}
                 >
-                  Hola: Manuel
+                  Hola: {usuario.displayName}
                 </p>
 
-                <Boton bgColor>Cerrar Sesión</Boton>
+                <Boton 
+                  bgColor
+                  // Al dar click se ejecuta la función para cerrar sesión
+                  onClick={() => firebase.logout()}
+                >Cerrar Sesión</Boton>
               </>
             ) : (
               <>

@@ -30,6 +30,12 @@ class Firebase {
         // Iniciamos sesión
         return await this.auth.signInWithEmailAndPassword(email, password);
     }
+
+    // Función para cerrar sesión
+    async logout() {
+        // Cerramos sesión
+        await this.auth.signOut();
+    }
 }
 
 const firebase = new Firebase();
