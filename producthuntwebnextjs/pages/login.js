@@ -38,8 +38,17 @@ const Login = () => {
   const { email, password } = valores;
 
   // Función que se ejecuta cuando el usuario hace submit en el formulario
-  function iniciarSesion() {
-    console.log("Iniciando sesión");
+  async function iniciarSesion() {
+    try {
+      // Llamando la función login del componente firebase
+      await firebase.login(email, password);
+
+      // Redireccionando al usuario a la página principal
+      Router.push("/");
+    } catch (error) {
+      console.log("Hubo un error al autenticar el usuario", error.message);
+      setError(error.message);
+    }
   }
 
   return (
@@ -54,7 +63,7 @@ const Login = () => {
           >
             Iniciar Sesión
           </h1>
-          <Formulario onSubmit={handleSubmit} noValidate>            
+          <Formulario onSubmit={handleSubmit} noValidate>
             <Campo>
               <label htmlFor="email">Email</label>
               <input
