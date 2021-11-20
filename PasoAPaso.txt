@@ -92,4 +92,6 @@
 ** Creando Productos ** 
 
 37. Empezar a trabajar en la page: pages/nuevo-producto.js
+
+38. Crear las reglas de validacion para crear producto en el archivo: validacion/validarCrearProducto.js
                                      
