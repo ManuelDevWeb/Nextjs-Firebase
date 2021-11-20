@@ -14,7 +14,7 @@ const validarCrearProducto = (valores) => {
     // Validar url
     if (!valores.url) {
         errores.url = 'La url es obligatoria';
-    } else if (/^(ftp|http|https):\/\/[^ "]+$/.test(valores.url)) {
+    } else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(valores.url)) {
         errores.url = 'La url no es valida o está mal formateada';
     }
 

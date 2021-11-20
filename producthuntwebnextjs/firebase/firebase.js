@@ -2,6 +2,7 @@
 
 import app from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 // Configuración Firebase
 import firebaseConfig from './config';
@@ -12,6 +13,7 @@ class Firebase {
             app.initializeApp(firebaseConfig);
         }
         this.auth = app.auth();
+        this.db = app.firestore();
     }
 
     // Función que registra un usuario

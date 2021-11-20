@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Router from "next/router";
+import React, { useState, useContext } from "react";
+import Router, {useRouter} from "next/router";
 
-// Firebase
-import firebase from "../firebase/index";
+// Context
+import {FirebaseContext} from "../firebase/index";
 
 // Components
 import Layout from "../components/layout/Layout";
@@ -19,12 +19,12 @@ import { css } from "@emotion/react";
 
 // Validaciones
 import useValidacion from "../hooks/useValidacion";
-import validarCrearCuenta from "../validacion/validarCrearCuenta";
+import validarCrearProducto from "../validacion/validarCrearProducto";
 
 const STATE_INICIAL = {
   nombre: "",
   empresa: "",
-  imagen: "",
+  //imagen: "",
   url:"",
   descripcion:""
 };
@@ -35,14 +35,37 @@ const NuevoProducto = () => {
 
   // Implementando custom hook useValidacion
   const { valores, errores, handleChange, handleSubmit, handleBlur } =
-    useValidacion(STATE_INICIAL, validarCrearCuenta, crearCuenta);
+    useValidacion(STATE_INICIAL, validarCrearProducto, crearProducto);
 
   // Destructuring a los valores del custom hook useValidacion
   const { nombre, empresa, imagen, url, descripcion } = valores;
 
+  // Hook de routing para redireccionar
+  const router=useRouter();
+
+  // Extrayendo del Context las operaciones CRUD de firebase
+  const { usuario, firebase } = useContext(FirebaseContext);
+
   // Función que se ejecuta cuando el usuario hace submit en el formulario
-  async function crearCuenta() {
-    
+  async function crearProducto() {
+    // Si el usuario no está autenticado, redireccionar al login
+    if(!usuario){
+      return router.push("/login");
+    }
+
+    // Crear el objeto de nuevo producto
+    const producto={
+      nombre,
+      empresa,
+      url,
+      descripcion,
+      votos:0,
+      comentarios:[],
+      creado: Date.now()
+    }
+
+    // Insertar el producto en la BD
+    await firebase.db.collection("productos").add(producto);
   }
 
   return (
@@ -96,7 +119,7 @@ const NuevoProducto = () => {
                 errores.empresa ? <Error>{errores.empresa}</Error> : null
               }
 
-              <Campo>
+              {/* <Campo>
                 <label htmlFor="imagen">Imagen</label>
                 <input
                   type="file"
@@ -110,7 +133,7 @@ const NuevoProducto = () => {
               {
                 // Si hay un error en el campo imagen, se muestra
                 errores.imagen ? <Error>{errores.imagen}</Error> : null
-              }
+              } */}
 
               <Campo>
                 <label htmlFor="url">URL</label>
@@ -118,6 +141,7 @@ const NuevoProducto = () => {
                   type="url"
                   id="url"
                   name="url"
+                  placeholder="URL del producto"
                   value={url}
                   onChange={handleChange}
                   onBlur={handleBlur}
