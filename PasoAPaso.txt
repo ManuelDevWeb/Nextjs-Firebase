@@ -106,5 +106,5 @@
 
 ** Mostrando los Productos en la página principal **
 
-
+41. Empezar a trabajar en la page: pages/index.js
                                      
