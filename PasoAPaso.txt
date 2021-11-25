@@ -107,4 +107,8 @@
 ** Mostrando los Productos en la página principal **
 
 41. Empezar a trabajar en la page: pages/index.js
+
+42. Crear el componente: components/layout/DetallesProducto.js
+
+43. Instalar la libreria para fechas: npm i date-fns
                                      

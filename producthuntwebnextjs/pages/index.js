@@ -5,6 +5,7 @@ import firebase from '../firebase';
 
 // Components
 import Layout from '../components/layout/Layout';
+import DetalleProducto from '../components/layout/DetalleProducto';
 
 // Styles
 
@@ -43,7 +44,21 @@ const  Home=()=> {
   return (
     <div>
       <Layout>
-        <h1>Inicio</h1>
+        <div className="listado-productos">
+          <div className="contenedor">
+            <ul className="bg-white">
+              {
+                // Iterando sobre los productos
+                productos.map(producto=>(
+                  <DetalleProducto 
+                    key={producto.id}
+                    producto={producto}
+                  />
+                ))
+              }
+            </ul>
+          </div>
+        </div>
       </Layout>
     </div>
   )
