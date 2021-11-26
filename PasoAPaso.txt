@@ -111,4 +111,10 @@
 42. Crear el componente: components/layout/DetallesProducto.js
 
 43. Instalar la libreria para fechas: npm i date-fns
+
+** Routing Dinámico y Páginas de Productos **
+
+44. Crear la carpeta: pages/productos
+
+45. Crear el componente: pages/productos/[id].js
                                      

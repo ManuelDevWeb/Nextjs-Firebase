@@ -1,6 +1,7 @@
 import React from "react";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
+import Link from 'next/link';
 
 // Styles
 import styled from "@emotion/styled";
@@ -110,7 +111,10 @@ const DetalleProducto = ({ producto }) => {
         </div>
 
         <div>
-          <Titulo>{nombre}</Titulo>
+          {/* Debemos crear una carpeta llamada productos y un archivo llamada id. El id del as, viene por props */}
+          <Link href="/productos/[id]" as={`/productos/${id}`}>
+            <Titulo>{nombre}</Titulo>
+          </Link>
           <TextoDescripcion>{descripcion}</TextoDescripcion>
 
           <Comentarios>
