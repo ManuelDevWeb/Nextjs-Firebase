@@ -117,4 +117,6 @@
 44. Crear la carpeta: pages/productos
 
 45. Crear el componente: pages/productos/[id].js
+
+46. Crear el componente: components/layout/404.js
                                      
