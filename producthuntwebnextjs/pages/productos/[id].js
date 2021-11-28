@@ -30,6 +30,16 @@ const ContenedorProducto = styled.div`
   }
 `;
 
+const CreadorProducto = styled.p`
+  padding: 0.5rem 2rem;
+  background-color: #da552f;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+`;
+
 const Producto = () => {
   // State para manejar el producto
   const [producto, setProducto] = useState({});
@@ -37,6 +47,8 @@ const Producto = () => {
   const [error, setError] = useState(false);
   // State para manejar los comentarios
   const [comentario, setComentario] = useState({});
+  // State para consultar BD
+  const [consultarDB, setConsultarDB] = useState(true);
 
   // Context de firebase
   const { firebase, usuario } = useContext(FirebaseContext);
@@ -50,7 +62,7 @@ const Producto = () => {
 
   useEffect(() => {
     // Validamos que si venga un id por la url
-    if (id) {
+    if (id && consultarDB) {
       const obtenerProducto = async () => {
         // Obtenemos por id, el producto de firebase
         const productoQuery = await firebase.db.collection("productos").doc(id);
@@ -62,8 +74,12 @@ const Producto = () => {
         if (producto.exists) {
           // Almacenamos el producto en el state
           setProducto(producto.data());
+          // Reseteamos consultarDB
+          setConsultarDB(false);
         } else {
           setError(true);
+          // Reseteamos consultarDB
+          setConsultarDB(false);
         }
       };
 
@@ -71,7 +87,7 @@ const Producto = () => {
         obtenerProducto();
       }, 1000);
     }
-  }, [id, producto]);
+  }, [id]);
 
   // Si las keys del objeto producto es 0, mostramos mensaje de carga o spiner
   if (Object.keys(producto).length === 0 && !error) {
@@ -121,6 +137,9 @@ const Producto = () => {
       ...producto,
       votos: nuevoTotal,
     });
+
+    // Reseteamos consultarDB
+    setConsultarDB(true);
   };
 
   // Función para almacenar comentarios en el state
@@ -158,6 +177,16 @@ const Producto = () => {
       ...producto,
       comentarios: nuevosComentarios,
     });
+
+    // Reseteamos consultarDB
+    setConsultarDB(true);
+  };
+
+  // Función que identifica si el comentario es del creador del producto
+  const esCreador = (id) => {
+    if (creador.id === id) {
+      return true;
+    }
   };
 
   return (
@@ -165,119 +194,131 @@ const Producto = () => {
       <>
         {
           // Si error es verdadero retornamos componente Error404
-          error && <Error404 />
-        }
-        <div className="contenedor">
-          <h1
-            css={css`
-              text-align: center;
-              margin-top: 5rem;
-            `}
-          >
-            {nombre}
-          </h1>
-
-          <ContenedorProducto>
-            <div>
-              <p>
-                Publicado hace:{" "}
-                {formatDistanceToNow(new Date(creado), { locale: es })}
-              </p>
-
-              <p>
-                Publicador por: {creador.nombre}, de {empresa}
-              </p>
-
-              <img src={urlImagen} alt={nombre} />
-
-              <p>{descripcion}</p>
-
-              {
-                // Validando que haya un usuario logeado
-                usuario && (
-                  <>
-                    <h2>Agrega tu comentario</h2>
-                    <form onSubmit={agregarComentario}>
-                      <Campo>
-                        <input
-                          type="text"
-                          name="mensaje"
-                          onChange={comentarioChange}
-                        />
-                      </Campo>
-                      <InputSubmit type="submit" value="Agregar Comentario" />
-                    </form>
-                  </>
-                )
-              }
-
-              <h2
+          error ? (
+            <Error404 />
+          ) : (
+            <div className="contenedor">
+              <h1
                 css={css`
-                  margin: 2rem 0;
-                `}
-              >
-                Comentarios
-              </h2>
-
-              {comentarios.length === 0 ? (
-                "Aún no hay comentarios"
-              ) : (
-                <ul>
-                  {
-                    // Mapeando sobre los comentarios del producto
-                    comentarios.map((comentario, i) => (
-                      <li
-                        key={`${comentario.usuarioId}-${i}`}
-                        css={css`
-                          border: 1px solid #e1e1e1;
-                          padding: 2rem;
-                        `}
-                      >
-                        <p>{comentario.mensaje}</p>
-                        <p>
-                          Escrito por:
-                          <span
-                            css={css`
-                              font-weight: bold;
-                            `}
-                          >
-                            {" "}
-                            {comentario.usuarioNombre}
-                          </span>
-                        </p>
-                      </li>
-                    ))
-                  }
-                </ul>
-              )}
-            </div>
-
-            <aside>
-              <Boton target="_blank" bgColor="true" href={url}>
-                Visitrar URL
-              </Boton>
-
-              <div
-                css={css`
+                  text-align: center;
                   margin-top: 5rem;
                 `}
               >
-                <p
-                  css={css`
-                    text-align: center;
-                  `}
-                >
-                  {votos} Votos
-                </p>
+                {nombre}
+              </h1>
 
-                {
-                  // Validando que haya un usuario logeado
-                  usuario && <Boton onClick={votarProducto}>Votar</Boton>
-                }
-              </div>
-            </aside>
-          </ContenedorProducto>
-        </div>
+              <ContenedorProducto>
+                <div>
+                  <p>
+                    Publicado hace:{" "}
+                    {formatDistanceToNow(new Date(creado), { locale: es })}
+                  </p>
+
+                  <p>
+                    Publicador por: {creador.nombre}, de {empresa}
+                  </p>
+
+                  <img src={urlImagen} alt={nombre} />
+
+                  <p>{descripcion}</p>
+
+                  {
+                    // Validando que haya un usuario logeado
+                    usuario && (
+                      <>
+                        <h2>Agrega tu comentario</h2>
+                        <form onSubmit={agregarComentario}>
+                          <Campo>
+                            <input
+                              type="text"
+                              name="mensaje"
+                              onChange={comentarioChange}
+                            />
+                          </Campo>
+                          <InputSubmit
+                            type="submit"
+                            value="Agregar Comentario"
+                          />
+                        </form>
+                      </>
+                    )
+                  }
+
+                  <h2
+                    css={css`
+                      margin: 2rem 0;
+                    `}
+                  >
+                    Comentarios
+                  </h2>
+
+                  {comentarios.length === 0 ? (
+                    "Aún no hay comentarios"
+                  ) : (
+                    <ul>
+                      {
+                        // Mapeando sobre los comentarios del producto
+                        comentarios.map((comentario, i) => (
+                          <li
+                            key={`${comentario.usuarioId}-${i}`}
+                            css={css`
+                              border: 1px solid #e1e1e1;
+                              padding: 2rem;
+                            `}
+                          >
+                            <p>{comentario.mensaje}</p>
+                            <p>
+                              Escrito por:
+                              <span
+                                css={css`
+                                  font-weight: bold;
+                                `}
+                              >
+                                {" "}
+                                {comentario.usuarioNombre}
+                              </span>
+                            </p>
+                            {
+                              // Se muestra si esCreador() retorna true
+                              esCreador(comentario.usuarioId) && (
+                                <CreadorProducto>Es Creador</CreadorProducto>
+                              )
+                            }
+                          </li>
+                        ))
+                      }
+                    </ul>
+                  )}
+                </div>
+
+                <aside>
+                  <Boton target="_blank" bgColor="true" href={url}>
+                    Visitrar URL
+                  </Boton>
+
+                  <div
+                    css={css`
+                      margin-top: 5rem;
+                    `}
+                  >
+                    <p
+                      css={css`
+                        text-align: center;
+                      `}
+                    >
+                      {votos} Votos
+                    </p>
+
+                    {
+                      // Validando que haya un usuario logeado
+                      usuario && <Boton onClick={votarProducto}>Votar</Boton>
+                    }
+                  </div>
+                </aside>
+              </ContenedorProducto>
+            </div>
+          )
+        }
       </>
     </Layout>
   );
