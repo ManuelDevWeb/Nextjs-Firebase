@@ -35,6 +35,8 @@ const Producto = () => {
   const [producto, setProducto] = useState({});
   // State para manejar el error
   const [error, setError] = useState(false);
+  // State para manejar los comentarios
+  const [comentario, setComentario] = useState({});
 
   // Context de firebase
   const { firebase, usuario } = useContext(FirebaseContext);
@@ -112,12 +114,49 @@ const Producto = () => {
     firebase.db
       .collection("productos")
       .doc(id)
-      .update({ votos: nuevoTotal, usuariosVotaron:nuevoUsuarioVoto });
+      .update({ votos: nuevoTotal, usuariosVotaron: nuevoUsuarioVoto });
 
     // Actualizar el state
     setProducto({
       ...producto,
       votos: nuevoTotal,
+    });
+  };
+
+  // Función para almacenar comentarios en el state
+  const comentarioChange = (e) => {
+    setComentario({
+      ...comentario,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Función para agregar comentario en el producto
+  const agregarComentario = (e) => {
+    e.preventDefault();
+
+    // Si no existe ningun usuario enviamos al login
+    if (!usuario) {
+      return router.push("/login");
+    }
+
+    // Información extra al comentario
+    comentario.usuarioId = usuario.uid;
+    comentario.usuarioNombre = usuario.displayName;
+
+    // Agregando comentarios al arreglo
+    const nuevosComentarios = [...comentarios, comentario];
+
+    // Actualizar la BD
+    firebase.db
+      .collection("productos")
+      .doc(id)
+      .update({ comentarios: nuevosComentarios });
+
+    // Actualizar el state
+    setProducto({
+      ...producto,
+      comentarios: nuevosComentarios,
     });
   };
 
@@ -158,9 +197,13 @@ const Producto = () => {
                 usuario && (
                   <>
                     <h2>Agrega tu comentario</h2>
-                    <form action="">
+                    <form onSubmit={agregarComentario}>
                       <Campo>
-                        <input type="text" name="mensaje" />
+                        <input
+                          type="text"
+                          name="mensaje"
+                          onChange={comentarioChange}
+                        />
                       </Campo>
                       <InputSubmit type="submit" value="Agregar Comentario" />
                     </form>
@@ -175,15 +218,38 @@ const Producto = () => {
               >
                 Comentarios
               </h2>
-              {
-                // Mapeando sobre los comentarios del producto
-                comentarios.map((comentario) => (
-                  <li>
-                    <p>{comentario.nombre}</p>
-                    <p>Escrito por: {comentario.usuarioNombre}</p>
-                  </li>
-                ))
-              }
+
+              {comentarios.length === 0 ? (
+                "Aún no hay comentarios"
+              ) : (
+                <ul>
+                  {
+                    // Mapeando sobre los comentarios del producto
+                    comentarios.map((comentario, i) => (
+                      <li
+                        key={`${comentario.usuarioId}-${i}`}
+                        css={css`
+                          border: 1px solid #e1e1e1;
+                          padding: 2rem;
+                        `}
+                      >
+                        <p>{comentario.mensaje}</p>
+                        <p>
+                          Escrito por:
+                          <span
+                            css={css`
+                              font-weight: bold;
+                            `}
+                          >
+                            {" "}
+                            {comentario.usuarioNombre}
+                          </span>
+                        </p>
+                      </li>
+                    ))
+                  }
+                </ul>
+              )}
             </div>
 
             <aside>
