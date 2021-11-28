@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useRouter } from "next/router";
+import Router from "next/router";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
 
@@ -14,6 +15,7 @@ import { FirebaseContext } from "../../firebase";
 import Layout from "../../components/layout/Layout";
 import Error404 from "../../components/layout/404";
 import { Campo, InputSubmit } from "../../components/ui/Formulario";
+import Boton from "../../components/ui/Boton";
 
 // Styles
 import styled from "@emotion/styled";
@@ -35,7 +37,7 @@ const Producto = () => {
   const [error, setError] = useState(false);
 
   // Context de firebase
-  const { firebase } = useContext(FirebaseContext);
+  const { firebase, usuario } = useContext(FirebaseContext);
 
   // Routing para obtener el id actual
   const router = useRouter();
@@ -67,7 +69,7 @@ const Producto = () => {
         obtenerProducto();
       }, 1000);
     }
-  }, [id]);
+  }, [id, producto]);
 
   // Si las keys del objeto producto es 0, mostramos mensaje de carga o spiner
   if (Object.keys(producto).length === 0 && !error) {
@@ -84,7 +86,40 @@ const Producto = () => {
     votos,
     comentarios,
     creado,
+    creador,
+    usuariosVotaron,
   } = producto;
+
+  // Función para administrar y validar los votos
+  const votarProducto = () => {
+    // Si no existe ningun usuario enviamos al login
+    if (!usuario) {
+      return Router.push("/login");
+    }
+
+    // Obtener y sumar un nueveo voto
+    const nuevoTotal = votos + 1;
+
+    // Verificar si el usuario actual ha votado o no
+    if (usuariosVotaron.includes(usuario.uid)) {
+      return;
+    }
+
+    // Guardar el ID del usuario que ha votado
+    const nuevoUsuarioVoto = [...usuariosVotaron, usuario.uid];
+
+    // Actualizar en la BD
+    firebase.db
+      .collection("productos")
+      .doc(id)
+      .update({ votos: nuevoTotal, usuariosVotaron:nuevoUsuarioVoto });
+
+    // Actualizar el state
+    setProducto({
+      ...producto,
+      votos: nuevoTotal,
+    });
+  };
 
   return (
     <Layout>
@@ -110,35 +145,71 @@ const Producto = () => {
                 {formatDistanceToNow(new Date(creado), { locale: es })}
               </p>
 
+              <p>
+                Publicador por: {creador.nombre}, de {empresa}
+              </p>
+
               <img src={urlImagen} alt={nombre} />
 
               <p>{descripcion}</p>
 
-              <h2>Agrega tu comentario</h2>
-              <form action="">
-                <Campo>
-                  <input type="text" name="mensaje" />
-                </Campo>
-                <InputSubmit type="submit" value="Agregar Comentario" />
-              </form>
+              {
+                // Validando que haya un usuario logeado
+                usuario && (
+                  <>
+                    <h2>Agrega tu comentario</h2>
+                    <form action="">
+                      <Campo>
+                        <input type="text" name="mensaje" />
+                      </Campo>
+                      <InputSubmit type="submit" value="Agregar Comentario" />
+                    </form>
+                  </>
+                )
+              }
 
               <h2
                 css={css`
-                    margin: 2rem 0;
+                  margin: 2rem 0;
                 `}
-              >Comentarios</h2>
+              >
+                Comentarios
+              </h2>
               {
-                  // Mapeando sobre los comentarios del producto
-                  comentarios.map((comentario)=>(
-                      <li>
-                          <p>{comentario.nombre}</p>
-                          <p>Escrito por: {comentario.usuarioNombre}</p>
-                      </li>
-                  ))
+                // Mapeando sobre los comentarios del producto
+                comentarios.map((comentario) => (
+                  <li>
+                    <p>{comentario.nombre}</p>
+                    <p>Escrito por: {comentario.usuarioNombre}</p>
+                  </li>
+                ))
               }
             </div>
 
-            <aside>2</aside>
+            <aside>
+              <Boton target="_blank" bgColor="true" href={url}>
+                Visitrar URL
+              </Boton>
+
+              <div
+                css={css`
+                  margin-top: 5rem;
+                `}
+              >
+                <p
+                  css={css`
+                    text-align: center;
+                  `}
+                >
+                  {votos} Votos
+                </p>
+
+                {
+                  // Validando que haya un usuario logeado
+                  usuario && <Boton onClick={votarProducto}>Votar</Boton>
+                }
+              </div>
+            </aside>
           </ContenedorProducto>
         </div>
       </>

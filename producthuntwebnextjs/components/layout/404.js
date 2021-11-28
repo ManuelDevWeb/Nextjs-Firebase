@@ -12,7 +12,7 @@ const Error404 = () => {
                 text-align: center;
             `}
         >
-            Producto no existente
+            No se puede obtener
         </h1>
     );
 }
