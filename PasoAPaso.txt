@@ -131,4 +131,33 @@
 50. Empezar a trabajar en la page: pages/buscar.js
 
 ** Deployment de la App **
-                                     
+
+51. Deployment a Firebase Hosting:  - Instalar: npm istall -g firebase-tools
+                                    - Ejecutar: firebase init hosting 
+                                    - Al mismo tiempo en otra terminal, ejecutar: npm run build                                
+                                    - Use an existing project
+                                    - Seleccionar proyecto actual
+                                    - Al mismo tiempo en otra terminal, ejecutar: npm run export
+                                    - What do you want to use as your public directory?: out
+                                    - Configure as a single-page app (rewrite all urls to /index.html)?: No
+                                    - Set up automatic builds and deploys with GitHub?: No
+                                    - File out/404.html already exists. Overwrite?: No
+                                    - File out/index.html already exists. Overwrite?: No
+                                    - Finalmente: firebase deploy
+                                    - URL: https://product-hunt-a1f5f.web.app
+
+52. Deployment a Vercel: - Instalar: npm i -g now
+                         - Ejecutar: now login
+                         - Tener en cuenta algunos pasos anteriores como el de ejecutar build y export
+                         - Ejecutar: now out/
+                         - Set up and deploy “F:\Cursos Programacion\React\P13. Netxjs-Firebase\producthuntwebnextjs\out”?: Yes 
+                         - Which scope do you want to deploy to? manuelowsky
+                         - Link to existing project?: No
+                         - What’s your project’s name?: producthuntnextjsweb
+                         - In which directory is your code located? ./
+                         - Want to override the settings?: n
+                         - URL: https://producthuntnextjsweb.vercel.app/
+
+53. Deployment a Netlify: - Tener en cuenta algunos pasos anteriores como el de ejecutar build y export
+                          - Arrastras la carpeta out a la página de Netlify
+                          - URL: https://project-nextjs-mvl17.netlify.app/            
