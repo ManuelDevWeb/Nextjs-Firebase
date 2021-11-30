@@ -2,16 +2,34 @@ import React from 'react';
 
 // Components
 import Layout from '../components/layout/Layout';
+import DetalleProducto from '../components/layout/DetalleProducto';
 
-// Styles
-import styled from '@emotion/styled';
+// Hooks
+import useProductos from '../hooks/useProductos';
 
 const Populares=()=> {
+  // Enviando el parametro al custom hook para obtener el valor del return
+  const {productos} = useProductos('votos');
+ 
   return (
     <div>
-        <Layout>
-            <h1>Populares</h1>
-        </Layout>
+      <Layout>
+        <div className="listado-productos">
+          <div className="contenedor">
+            <ul className="bg-white">
+              {
+                // Iterando sobre los productos
+                productos.map(producto=>(
+                  <DetalleProducto 
+                    key={producto.id}
+                    producto={producto}
+                  />
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </Layout>
     </div>
   )
 }

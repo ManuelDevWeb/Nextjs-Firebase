@@ -119,4 +119,12 @@
 45. Crear el componente: pages/productos/[id].js
 
 46. Crear el componente: components/layout/404.js
+
+47. Empezar a trabajar en la page: pages/populares.js
+
+48. Crear el custom hook: hooks/useProductos.js
+
+** Agregando Buscador **
+
+** Deployment de la App **
                                      

@@ -189,6 +189,38 @@ const Producto = () => {
     }
   };
 
+  // Función que revisa que el creados del producto sea el mismo que está autenticado
+  const puedeBorrar = () => {
+    // Validando si hay un usuario autenticado
+    if (!usuario) return false;
+
+    // Validando que el usuario logeado sea el creador del producto
+    if (creador.id === usuario.uid) {
+      return true;
+    }
+  };
+
+  // Función para eliminar producto de la BD
+  const eliminarProducto = async()=>{
+    // Validando que si haya un usuario logeado
+    if(!usuario){
+      return router.push("/login");
+    }
+
+    // Validando que el usuario logeado sea el creador del producto
+    if (creador.id !== usuario.uid) {
+      return router.push("/login");
+    }
+
+    try {
+      // Eliminando producto de la BD
+      await firebase.db.collection("productos").doc(id).delete();
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Layout>
       <>
@@ -316,6 +348,20 @@ const Producto = () => {
                   </div>
                 </aside>
               </ContenedorProducto>
+
+              {
+                // Se ejecuta si puede borrar retorna true
+                puedeBorrar() && (
+                  <Boton
+                    css={css`
+                      color: #000000;
+                    `}
+                    onClick={eliminarProducto}
+                  >
+                    Eliminar Producto
+                  </Boton>
+                )
+              }
             </div>
           )
         }
