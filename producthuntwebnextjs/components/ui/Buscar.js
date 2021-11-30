@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import Router from 'next/router';
 
 // Styles
 import styled from "@emotion/styled";
@@ -31,15 +32,43 @@ const InputSubmit = styled.button`
 `;
 
 const Buscar = () => {
+    // State para manejar lo que el usuario escribe
+    const [busqueda, setBusqueda]=useState('');
+
+    // Función para guardar en el state lo que el usuario digita
+    const handleChange= e => {
+        setBusqueda(e.target.value);
+    }
+
+    // Función que se ejecuta cuando el usuario da submit en buscar
+    const buscarProducto= e => {
+        e.preventDefault();
+
+        // Validar que haya una busqueda
+        if(busqueda.trim()==='') return;
+
+        // Redireccionar al usuario y enviando parámetros a la page buscar
+        Router.push({
+            pathname: '/buscar',
+            query:{
+                // Lo que el usuario busca, se pasa como q
+                q: busqueda
+            }
+        })
+
+    }
+
     return (
         <form
             css={css`
                 position: relative;
             `}
+            onSubmit={buscarProducto}
         >
             <InputText 
                 type="text" 
                 placeholder="Buscar productos"
+                onChange={handleChange}
             />
             <InputSubmit type="submit">Buscar</InputSubmit>
         </form>

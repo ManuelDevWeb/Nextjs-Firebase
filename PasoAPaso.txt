@@ -126,5 +126,9 @@
 
 ** Agregando Buscador **
 
+49. Empezar a trabajar en el componente: components/ui/Buscar.js
+
+50. Empezar a trabajar en la page: pages/buscar.js
+
 ** Deployment de la App **
                                      
